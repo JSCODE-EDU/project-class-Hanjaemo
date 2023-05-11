@@ -1,4 +1,4 @@
-package jscode.jscodestudy;
+package jscode.jscodestudy.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

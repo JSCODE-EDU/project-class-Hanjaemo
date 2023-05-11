@@ -1,5 +1,6 @@
-package jscode.jscodestudy;
+package jscode.jscodestudy.repository;
 
+import jscode.jscodestudy.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
