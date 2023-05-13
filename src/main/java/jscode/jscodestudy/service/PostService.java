@@ -3,6 +3,7 @@ package jscode.jscodestudy.service;
 import jscode.jscodestudy.domain.Post;
 import jscode.jscodestudy.dto.PostDto;
 import jscode.jscodestudy.repository.PostRepository;
+import jscode.jscodestudy.repository.PostSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
