@@ -1,6 +1,7 @@
 package jscode.jscodestudy.service;
 
 import jscode.jscodestudy.domain.Post;
+import jscode.jscodestudy.dto.PostDto;
 import jscode.jscodestudy.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,9 @@ public class PostService {
     /**
      * 게시글 작성
      */
-    public void writePost(Post post) {
+    public Long writePost(Post post) {
         postRepository.save(post);
+        return post.getId();
     }
 
     /**
@@ -39,7 +41,7 @@ public class PostService {
     /**
      * 특정 게시글 수정
      */
-    public Post updatePost(Long id, Post updatePost) {
+    public Post updatePost(Long id, PostDto updatePost) {
         Post post = postRepository.findOne(id);
         return post.update(updatePost);
     }

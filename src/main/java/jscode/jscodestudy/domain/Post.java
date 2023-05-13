@@ -1,6 +1,8 @@
 package jscode.jscodestudy.domain;
 
+import jscode.jscodestudy.dto.PostDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,11 +22,18 @@ public class Post {
     private String content;
 
     @Column(name = "created_time", updatable = false)
-    private LocalDateTime createdTime = LocalDateTime.now();
+    private LocalDateTime createdTime;
 
-    public Post update(Post updatePost) {
+    @Builder
+    public Post(String title, String content, LocalDateTime createdTime) {
+        this.title = title;
+        this.content = content;
+        this.createdTime = LocalDateTime.now();
+    }
+
+    public Post update(PostDto updatePost) {
         this.title = updatePost.getTitle();
         this.content = updatePost.getContent();
-        return updatePost;
+        return this;
     }
 }
