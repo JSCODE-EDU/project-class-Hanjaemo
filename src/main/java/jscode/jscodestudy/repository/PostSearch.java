@@ -7,9 +7,6 @@ import lombok.Setter;
 public class PostSearch {
     private String title;
 
-    public PostSearch() {
-    }
-
     public PostSearch(String title) {
         this.title = title;
     }

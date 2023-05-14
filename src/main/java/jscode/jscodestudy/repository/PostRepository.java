@@ -3,7 +3,10 @@ package jscode.jscodestudy.repository;
 import jscode.jscodestudy.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -16,23 +19,21 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public List<Post> findAll() {
-//        String jpql = "select p from Post p";
-//        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
-//        if (StringUtils.hasText(postSearch.getTitle())) {
-//            jpql += " where p.tile like :title";
-//        }
-//        jpql += " order by p.createdTime desc limit 100";
-//
-//        if (StringUtils.hasText(postSearch.getTitle())) {
-//            query.setParameter("title", postSearch.getTitle());
-//        }
-//
-//        return query.getResultList();
+    public List<Post> findAll(PostSearch postSearch) {
+        String jpql = "select p from Post p";
 
-        return em.createQuery("select p from Post p order by p.createdTime desc", Post.class)
-                .setMaxResults(100)
-                .getResultList();
+        if (postSearch.getTitle() != null) {
+            jpql += " where p.title like :title";
+        }
+        jpql += " order by p.createdTime desc";
+
+        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+
+        if (postSearch.getTitle() != null) {
+            query.setParameter("title", "%" + postSearch.getTitle() + "%");
+        }
+
+        return query.setMaxResults(100).getResultList();
     }
 
     public Post findOne(Long id) {

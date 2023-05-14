@@ -31,8 +31,8 @@ public class PostApiController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/posts")
-    public Result<PostDto> findAllPostBy() {
-        List<Post> findPost = postService.findAllPost();
+    public Result<PostDto> findAllPostBy(@RequestParam(required = false) String keyword) {
+        List<Post> findPost = postService.findAllPost(keyword);
         List<PostDto> findPostDto = findPost.stream()
                 .map(m -> PostDto.from(m))
                 .collect(Collectors.toList());

@@ -17,39 +17,25 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    /**
-     * 게시글 작성
-     */
     public Long writePost(Post post) {
         postRepository.save(post);
         return post.getId();
     }
 
-    /**
-     * 게시글 전체 조회
-     */
-    public List<Post> findAllPost() {
-        return postRepository.findAll();
+    public List<Post> findAllPost(String keyword) {
+        PostSearch postSearch = new PostSearch(keyword);
+        return postRepository.findAll(postSearch);
     }
 
-    /**
-     * 특정 게시글 조회
-     */
     public Post findPost(Long id) {
         return postRepository.findOne(id);
     }
 
-    /**
-     * 특정 게시글 수정
-     */
     public Post updatePost(Long id, PostDto updatePost) {
         Post post = postRepository.findOne(id);
-        return post.update(updatePost);
+        return post.updatePost(updatePost);
     }
 
-    /**
-     * 특정 게시글 삭제
-     */
     public void deletePost(Long id) {
         postRepository.delete(postRepository.findOne(id).getId());
     }
