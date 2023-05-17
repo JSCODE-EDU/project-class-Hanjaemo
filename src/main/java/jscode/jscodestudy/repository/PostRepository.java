@@ -3,7 +3,6 @@ package jscode.jscodestudy.repository;
 import jscode.jscodestudy.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -25,6 +24,7 @@ public class PostRepository {
         if (postSearch.getTitle() != null) {
             jpql += " where p.title like :title";
         }
+
         jpql += " order by p.createdTime desc";
 
         TypedQuery<Post> query = em.createQuery(jpql, Post.class);
