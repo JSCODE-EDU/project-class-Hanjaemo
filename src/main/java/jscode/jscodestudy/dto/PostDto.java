@@ -10,13 +10,16 @@ public class PostDto {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime created;
+    private LocalDateTime createdTime;
+
+    public PostDto() {
+    }
 
     public PostDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.created = post.getCreatedTime();
+        this.createdTime = post.getCreatedTime();
     }
 
     public static PostDto from(Post post) {

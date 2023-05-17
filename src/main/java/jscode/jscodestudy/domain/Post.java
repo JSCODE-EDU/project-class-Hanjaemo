@@ -31,7 +31,7 @@ public class Post {
         this.createdTime = LocalDateTime.now();
     }
 
-    public Post update(PostDto updatePost) {
+    public Post updatePost(PostDto updatePost) {
         this.title = updatePost.getTitle();
         this.content = updatePost.getContent();
         return this;

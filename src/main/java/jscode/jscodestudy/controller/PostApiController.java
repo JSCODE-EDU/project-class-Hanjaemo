@@ -3,6 +3,7 @@ package jscode.jscodestudy.controller;
 import jscode.jscodestudy.domain.Post;
 import jscode.jscodestudy.dto.PostDto;
 import jscode.jscodestudy.dto.Result;
+import jscode.jscodestudy.repository.PostSearch;
 import jscode.jscodestudy.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,8 @@ public class PostApiController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/posts")
-    public Result<PostDto> findAllPost() {
-        List<Post> findPost = postService.findAllPost();
+    public Result<PostDto> findAllPostBy(@RequestParam(required = false) String keyword) {
+        List<Post> findPost = postService.findAllPost(keyword);
         List<PostDto> findPostDto = findPost.stream()
                 .map(m -> PostDto.from(m))
                 .collect(Collectors.toList());
