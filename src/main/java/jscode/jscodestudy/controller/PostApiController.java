@@ -3,15 +3,17 @@ package jscode.jscodestudy.controller;
 import jscode.jscodestudy.domain.Post;
 import jscode.jscodestudy.dto.PostDto;
 import jscode.jscodestudy.dto.Result;
-import jscode.jscodestudy.repository.PostSearch;
 import jscode.jscodestudy.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class PostApiController {
@@ -20,18 +22,14 @@ public class PostApiController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/posts")
-    public PostDto writePost(@RequestBody PostDto postDto) {
-        Post post = Post.builder()
-                .title(postDto.getTitle())
-                .content(postDto.getContent())
-                .build();
-        postService.writePost(post);
+    public PostDto writePost(@Valid @RequestBody PostDto postDto) {
+        Post post = postService.writePost(postDto);
         return PostDto.from(post);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/posts")
-    public Result<PostDto> findAllPostBy(@RequestParam(required = false) String keyword) {
+    public Result<PostDto> findAllPostBy(@Valid @RequestParam(required = false) String keyword) {
         List<Post> findPost = postService.findAllPost(keyword);
         List<PostDto> findPostDto = findPost.stream()
                 .map(m -> PostDto.from(m))
@@ -48,7 +46,7 @@ public class PostApiController {
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/posts/{id}")
-    public PostDto updatePost(@PathVariable("id") Long id, @RequestBody PostDto postDto) {
+    public PostDto updatePost(@PathVariable("id") Long id, @Valid @RequestBody PostDto postDto) {
         Post updatePost = postService.updatePost(id, postDto);
         return PostDto.from(updatePost);
     }
