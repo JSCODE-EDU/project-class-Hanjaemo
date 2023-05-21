@@ -29,8 +29,8 @@ public class PostApiController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/posts")
-    public Result<PostDto> findAllPostBy(@Valid @RequestParam(required = false) String keyword) {
-        List<Post> findPost = postService.findAllPost(keyword);
+    public Result<PostDto> findAllPost() {
+        List<Post> findPost = postService.findAllPost();
         List<PostDto> findPostDto = findPost.stream()
                 .map(m -> PostDto.from(m))
                 .collect(Collectors.toList());
@@ -56,5 +56,15 @@ public class PostApiController {
     public String deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
         return "ok";
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/posts/search")
+    public Result<PostDto> findAllPostByTitle(@Valid @RequestParam(required = false) String keyword) {
+        List<Post> findPost = postService.findAllPostByTitle(keyword);
+        List<PostDto> findPostDto = findPost.stream()
+                .map(m -> PostDto.from(m))
+                .collect(Collectors.toList());
+        return Result.from(findPostDto);
     }
 }

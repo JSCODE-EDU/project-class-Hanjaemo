@@ -30,12 +30,8 @@ public class PostService {
         return post;
     }
 
-    public List<Post> findAllPost(String keyword) {
-        if (keyword.length() < 1) {
-            throw new PostException(ErrorCode.BAD_REQUEST);
-        }
-        PostSearch postSearch = new PostSearch(keyword);
-        return postRepository.findAll(postSearch);
+    public List<Post> findAllPost() {
+        return postRepository.findAll();
     }
 
     public Post findPost(Long id) {
@@ -52,5 +48,13 @@ public class PostService {
         Post post = Optional.ofNullable(postRepository.findOne(id))
                 .orElseThrow(() -> new PostException(ErrorCode.NOT_FOUND));
         postRepository.delete(post.getId());
+    }
+
+    public List<Post> findAllPostByTitle(String keyword) {
+        if (keyword.length() < 1) {
+            throw new PostException(ErrorCode.BAD_REQUEST);
+        }
+        PostSearch postSearch = new PostSearch(keyword);
+        return postRepository.findAllByTitle(postSearch);
     }
 }
