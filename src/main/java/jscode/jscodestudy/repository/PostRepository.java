@@ -18,7 +18,26 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public List<Post> findAll(PostSearch postSearch) {
+    public List<Post> findAll() {
+        String jpql = "select p from Post p";
+
+        jpql += " order by p.createdTime desc";
+
+        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+
+        return query.setMaxResults(100).getResultList();
+    }
+
+    public Post findOne(Long id) {
+        return em.find(Post.class, id);
+    }
+
+    public void delete(Long id) {
+        Post findPost = em.find(Post.class, id);
+        em.remove(findPost);
+    }
+
+    public List<Post> findAllByTitle(PostSearch postSearch) {
         String jpql = "select p from Post p";
 
         if (postSearch.getTitle() != null) {
@@ -34,14 +53,5 @@ public class PostRepository {
         }
 
         return query.setMaxResults(100).getResultList();
-    }
-
-    public Post findOne(Long id) {
-        return em.find(Post.class, id);
-    }
-
-    public void delete(Long id) {
-        Post findPost = em.find(Post.class, id);
-        em.remove(findPost);
     }
 }
