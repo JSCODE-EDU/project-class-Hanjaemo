@@ -7,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static jscode.jscodestudy.exception.ErrorCode.INTERNAL_SERVER_ERROR;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,5 +23,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object processValidationError(MethodArgumentNotValidException e) {
         return new ErrorResult(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<ErrorResult> handleGlobalException(Throwable e) {
+        ErrorResult errorResult = new ErrorResult(INTERNAL_SERVER_ERROR.getHttpStatus(), INTERNAL_SERVER_ERROR.getMessage());
+        return new ResponseEntity<>(errorResult, errorResult.getHttpStatus());
     }
 }
