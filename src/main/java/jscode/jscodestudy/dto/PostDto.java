@@ -37,7 +37,6 @@ public class PostDto {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.createdTime = post.getCreatedTime();
     }
 
     public static PostDto from(Post post) {

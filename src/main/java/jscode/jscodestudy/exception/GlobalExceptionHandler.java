@@ -1,6 +1,5 @@
 package jscode.jscodestudy.exception;
 
-import jscode.jscodestudy.exception.domain.PostException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,7 +12,7 @@ import static jscode.jscodestudy.exception.ErrorCode.INTERNAL_SERVER_ERROR;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(PostException.class)
+    @ExceptionHandler(CustomException.class)
     ResponseEntity<ErrorResult> handlePostException(CustomException e) {
         log.error("CustomException : {}, {}", e.getHttpStatus(), e.getMessage());
         ErrorResult errorResult = new ErrorResult(e.getHttpStatus(), e.getMessage());
@@ -27,6 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ErrorResult> handleGlobalException(Throwable e) {
+        log.error("message : {}", e.getMessage());
         ErrorResult errorResult = new ErrorResult(INTERNAL_SERVER_ERROR.getHttpStatus(), INTERNAL_SERVER_ERROR.getMessage());
         return new ResponseEntity<>(errorResult, errorResult.getHttpStatus());
     }
