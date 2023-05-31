@@ -17,6 +17,14 @@ public class UserRepository {
         em.persist(user);
     }
 
+    public User findUser(String email, String password) {
+        String jpql = "select u from User u where u.email = :email and u.password = :password";
+        TypedQuery<User> query = em.createQuery(jpql, User.class);
+        return query.setParameter("email", email)
+                .setParameter("password", password)
+                .getSingleResult();
+    }
+
     public Long checkEmail(String email) {
         String jpql = "select count(u.email) from User u where u.email = :email";
         TypedQuery<Long> query = em.createQuery(jpql, Long.class);

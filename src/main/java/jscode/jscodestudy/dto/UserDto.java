@@ -1,5 +1,6 @@
 package jscode.jscodestudy.dto;
 
+import io.jsonwebtoken.Claims;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
