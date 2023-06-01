@@ -19,9 +19,7 @@ public class PostRepository {
     }
 
     public List<Post> findAll() {
-        String jpql = "select p from Post p";
-
-        jpql += " order by p.createdTime desc";
+        String jpql = "select p from Post p order by p.createdTime desc";
 
         TypedQuery<Post> query = em.createQuery(jpql, Post.class);
 

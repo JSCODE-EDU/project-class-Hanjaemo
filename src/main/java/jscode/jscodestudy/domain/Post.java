@@ -6,12 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -20,14 +19,10 @@ public class Post {
     private String title;
     private String content;
 
-    @Column(name = "created_time", updatable = false)
-    private LocalDateTime createdTime;
-
     @Builder
-    public Post(String title, String content, LocalDateTime createdTime) {
+    public Post(String title, String content) {
         this.title = title;
         this.content = content;
-        this.createdTime = LocalDateTime.now();
     }
 
     public Post updatePost(PostDto updatePost) {

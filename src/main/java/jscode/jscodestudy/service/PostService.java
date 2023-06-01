@@ -52,7 +52,7 @@ public class PostService {
 
     public List<Post> findAllPostByTitle(String keyword) {
         if (keyword.length() < 1) {
-            throw new PostException(ErrorCode.BAD_REQUEST);
+            throw new PostException(ErrorCode.BAD_REQUEST_SEARCH_TITLE);
         }
         PostSearch postSearch = new PostSearch(keyword);
         return postRepository.findAllByTitle(postSearch);

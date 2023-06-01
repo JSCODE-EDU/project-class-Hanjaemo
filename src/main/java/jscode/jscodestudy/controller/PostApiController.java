@@ -9,22 +9,24 @@ import jscode.jscodestudy.dto.Result;
 import jscode.jscodestudy.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.*;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/posts")
 public class PostApiController {
 
     private final PostService postService;
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/posts")
+    @ResponseStatus(CREATED)
+    @PostMapping()
     @ApiOperation(value = "게시글 작성", notes = "새 게시글을 작성하는 API")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
@@ -35,8 +37,8 @@ public class PostApiController {
         return PostDto.from(post);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/posts")
+    @ResponseStatus(OK)
+    @GetMapping()
     @ApiOperation(value = "게시글 전체 조회", notes = "전제 게시글을 모두 조회하는 API")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -51,8 +53,8 @@ public class PostApiController {
         return Result.from(findPostDto);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/posts/{id}")
+    @ResponseStatus(OK)
+    @GetMapping("/{id}")
     @ApiOperation(value = "특정 게시글 조회", notes = "특정 id의 게시글만 조회하는 API")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -64,8 +66,8 @@ public class PostApiController {
         return PostDto.from(findPost);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/posts/{id}")
+    @ResponseStatus(OK)
+    @PatchMapping("/{id}")
     @ApiOperation(value = "특정 게시글 수정", notes = "특정 id의 게시글을 수정하는 API")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -77,8 +79,8 @@ public class PostApiController {
         return PostDto.from(updatePost);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/posts/{id}")
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("/{id}")
     @ApiOperation(value = "특정 게시글 삭제", notes = "특정 id의 게시글을 삭제하는 API")
     @ApiResponses({
             @ApiResponse(code = 204, message = "성공"),
@@ -90,8 +92,8 @@ public class PostApiController {
         return "ok";
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/posts/search")
+    @ResponseStatus(OK)
+    @GetMapping("/search")
     @ApiOperation(value = "게시글 검색", notes = "검색 조건에 맞는 게시글을 조회하는 API")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
